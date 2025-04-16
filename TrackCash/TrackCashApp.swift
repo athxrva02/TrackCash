@@ -11,7 +11,11 @@ import SwiftUI
 struct TrackCashApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DashboardView(viewModel: ExpenseViewModel())
         }
     }
+}
+
+#Preview {
+    DashboardView(viewModel: ExpenseViewModel())
 }
