@@ -11,7 +11,7 @@ struct DashboardView: View {
     @ObservedObject var viewModel: ExpenseViewModel
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 16) {
                 SummaryView(viewModel: viewModel)
 
@@ -28,7 +28,7 @@ struct DashboardView: View {
                 ExpenseListView(expenses: viewModel.expenses)
             }
             .padding()
-            .navigationTitle("Expense Tracker")
+            .navigationTitle("TrackCash")
         }
     }
 }
