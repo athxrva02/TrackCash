@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ExpenseListView: View {
-    var expenses: [Expense]
+    var expenses: [ExpenseEntity]
     
     var body: some View {
         List {
             ForEach(expenses) { expense in
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(expense.title)
+                        Text(expense.title ?? "")
                             .font(.headline)
-                        Text(expense.category)
+                        Text(expense.category ?? "")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }

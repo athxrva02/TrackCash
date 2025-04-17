@@ -6,28 +6,65 @@
 //
 
 import Foundation
-import Combine
+import CoreData
 
 class ExpenseViewModel: ObservableObject {
-    @Published var expenses: [Expense] = []
+    private let context: NSManagedObjectContext
+    @Published var expenses: [ExpenseEntity] = []
 
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        fetchExpenses()
+    }
+
+    func fetchExpenses() {
+        let request: NSFetchRequest<ExpenseEntity> = ExpenseEntity.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ExpenseEntity.date, ascending: false)]
+
+        do {
+            expenses = try context.fetch(request)
+        } catch {
+            print("Fetch error: \(error)")
+        }
+    }
+
+    func addExpense(title: String, amount: Double, category: String, date: Date) {
+        let newExpense = ExpenseEntity(context: context)
+        newExpense.title = title
+        newExpense.amount = amount
+        newExpense.category = category
+        newExpense.date = date
+
+        save()
+    }
+
+    func deleteExpense(_ expense: ExpenseEntity) {
+        context.delete(expense)
+        save()
+    }
+
+    private func save() {
+        do {
+            try context.save()
+            fetchExpenses()
+        } catch {
+            print("Save error: \(error)")
+        }
+    }
+
+    // Calculations
     var total: Double {
         expenses.reduce(0) { $0 + $1.amount }
     }
 
     var weeklyTotal: Double {
-        let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        return expenses.filter { $0.date >= oneWeekAgo }.reduce(0) { $0 + $1.amount }
+        let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+        return expenses.filter { $0.date ?? Date() >= oneWeekAgo }.reduce(0) { $0 + $1.amount }
     }
 
     var monthlyTotal: Double {
-        let startOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date())) ?? Date()
-        return expenses.filter { $0.date >= startOfMonth }.reduce(0) { $0 + $1.amount }
-    }
-
-    func addExpense(title: String, amount: String, category: String, date: Date) {
-        guard let amountValue = Double(amount) else { return }
-        let newExpense = Expense(title: title, amount: amountValue, category: category, date: date)
-        expenses.append(newExpense)
+        let startOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Date()))!
+        return expenses.filter { $0.date ?? Date() >= startOfMonth }.reduce(0) { $0 + $1.amount }
     }
 }
+
