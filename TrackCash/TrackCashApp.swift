@@ -9,13 +9,20 @@ import SwiftUI
 
 @main
 struct TrackCashApp: App {
+    let persistenceController = PersistenceController.shared
+
     var body: some Scene {
         WindowGroup {
-            DashboardView(viewModel: ExpenseViewModel())
+            DashboardView(viewModel: ExpenseViewModel(context: persistenceController.container.viewContext))
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
 
 #Preview {
-    DashboardView(viewModel: ExpenseViewModel())
+    let context = PersistenceController.shared.container.viewContext
+    let viewModel = ExpenseViewModel(context: context)
+    return DashboardView(viewModel: viewModel)
+        .environment(\.managedObjectContext, context)
 }
+

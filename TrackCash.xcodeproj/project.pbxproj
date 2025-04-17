@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		455C54D52DB16C9800835ACD /* TrackCashModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 455C54D32DB16C9800835ACD /* TrackCashModel.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		BF505D962DAFA7DF003F0ECA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		455C54D42DB16C9800835ACD /* TrackCashModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackCashModel.xcdatamodel; sourceTree = "<group>"; };
 		BF505D852DAFA7DC003F0ECA /* TrackCash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackCash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF505D952DAFA7DF003F0ECA /* TrackCashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackCashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF505D9F2DAFA7DF003F0ECA /* TrackCashUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackCashUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +80,7 @@
 		BF505D7C2DAFA7DC003F0ECA = {
 			isa = PBXGroup;
 			children = (
+				455C54D32DB16C9800835ACD /* TrackCashModel.xcdatamodeld */,
 				BF505D872DAFA7DC003F0ECA /* TrackCash */,
 				BF505D982DAFA7DF003F0ECA /* TrackCashTests */,
 				BF505DA22DAFA7DF003F0ECA /* TrackCashUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				455C54D52DB16C9800835ACD /* TrackCashModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +559,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		455C54D32DB16C9800835ACD /* TrackCashModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				455C54D42DB16C9800835ACD /* TrackCashModel.xcdatamodel */,
+			);
+			currentVersion = 455C54D42DB16C9800835ACD /* TrackCashModel.xcdatamodel */;
+			path = TrackCashModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BF505D7D2DAFA7DC003F0ECA /* Project object */;
 }

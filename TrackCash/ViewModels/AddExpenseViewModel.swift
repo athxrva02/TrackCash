@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+import CoreData
 
 class AddExpenseViewModel: ObservableObject {
     @Published var title: String = ""
@@ -16,12 +16,32 @@ class AddExpenseViewModel: ObservableObject {
 
     let categories = ["Food", "Transport", "Bills", "Shopping", "Others"]
 
+    private var context: NSManagedObjectContext
+
+    init(context: NSManagedObjectContext) {
+        self.context = context
+    }
+
     func isValid() -> Bool {
         !title.isEmpty && Double(amount) != nil
     }
 
-    func createExpense() -> Expense? {
+    func createExpense() -> ExpenseEntity? {
         guard let amountValue = Double(amount), isValid() else { return nil }
-        return Expense(title: title, amount: amountValue, category: category, date: date)
+
+        let expense = ExpenseEntity(context: context)
+        expense.title = title
+        expense.amount = amountValue
+        expense.category = category
+        expense.date = date
+
+        do {
+            try context.save()
+            return expense
+        } catch {
+            print("Failed to save expense: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
+

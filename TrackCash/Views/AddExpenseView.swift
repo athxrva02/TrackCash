@@ -6,24 +6,33 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddExpenseView: View {
     @ObservedObject var viewModel: ExpenseViewModel
-    @StateObject private var addViewModel = AddExpenseViewModel()
+    @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
+    @StateObject private var addViewModel: AddExpenseViewModel
+
+    init(viewModel: ExpenseViewModel) {
+        self.viewModel = viewModel
+        _addViewModel = StateObject(wrappedValue: AddExpenseViewModel(context: PersistenceController.shared.container.viewContext))
+    }
+
     var body: some View {
         Form {
             TextField("Title", text: $addViewModel.title)
             TextField("Amount", text: $addViewModel.amount)
                 .keyboardType(.decimalPad)
+
             Picker("Category", selection: $addViewModel.category) {
-                ForEach(addViewModel.categories, id: \.self) {
-                    cat in Text(cat)
+                ForEach(addViewModel.categories, id: \.self) { cat in
+                    Text(cat)
                 }
             }
-            
+
             DatePicker("Date", selection: $addViewModel.date, displayedComponents: .date)
+
             Button("Save Expense") {
                 if let expense = addViewModel.createExpense() {
                     viewModel.expenses.append(expense)
@@ -31,6 +40,7 @@ struct AddExpenseView: View {
                 }
             }
         }
-        .navigationTitle(Text("Add Expense"))
+        .navigationTitle("Add Expense")
     }
 }
+
