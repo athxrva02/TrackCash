@@ -35,15 +35,15 @@ class ExpenseViewModel: ObservableObject {
         newExpense.category = category
         newExpense.date = date
 
-        save()
+        saveContext()
     }
 
     func deleteExpense(_ expense: ExpenseEntity) {
         context.delete(expense)
-        save()
+        saveContext()
     }
 
-    private func save() {
+    func saveContext() {
         do {
             try context.save()
             fetchExpenses()
