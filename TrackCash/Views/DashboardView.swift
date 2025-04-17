@@ -25,12 +25,10 @@ struct DashboardView: View {
                         .cornerRadius(10)
                 }
 
-                ExpenseListView(expenses: viewModel.expenses)
+                ExpenseListView(viewModel: viewModel)
             }
             .padding()
             .navigationTitle("TrackCash")
         }
     }
 }
-
-
