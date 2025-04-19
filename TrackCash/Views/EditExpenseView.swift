@@ -19,7 +19,7 @@ struct EditExpenseView: View {
                 set: { expense.title = $0 }
             ))
 
-            TextField("Amount", text: Binding(
+            TextField("Price", text: Binding(
                 get: { String(expense.amount) },
                 set: { expense.amount = Double($0) ?? 0.0 }
             ))
