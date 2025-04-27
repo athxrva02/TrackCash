@@ -5,6 +5,13 @@
 //  Created by AR-IN-M-120 on 16/04/25.
 //
 
+//
+//  TrackCashApp.swift
+//  TrackCash
+//
+//  Created by AR-IN-M-120 on 16/04/25.
+//
+
 import SwiftUI
 
 @main
@@ -13,16 +20,21 @@ struct TrackCashApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DashboardView(viewModel: ExpenseViewModel(context: persistenceController.container.viewContext))
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            let context = persistenceController.container.viewContext
+            let expenseViewModel = ExpenseViewModel(context: context)
+            let incomeViewModel = IncomeViewModel(context: context)
+
+            DashboardView(expenseViewModel: expenseViewModel, incomeViewModel: incomeViewModel)
+                .environment(\.managedObjectContext, context)
         }
     }
 }
 
 #Preview {
     let context = PersistenceController.shared.container.viewContext
-    let viewModel = ExpenseViewModel(context: context)
-    return DashboardView(viewModel: viewModel)
+    let expenseViewModel = ExpenseViewModel(context: context)
+    let incomeViewModel = IncomeViewModel(context: context)
+
+    return DashboardView(expenseViewModel: expenseViewModel, incomeViewModel: incomeViewModel)
         .environment(\.managedObjectContext, context)
 }
-
